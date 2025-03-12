@@ -1,26 +1,38 @@
-// index.js
+//crud.js
 
-const CRUD = require('./crud');
+class Crud {
+    constructor() {
+        this.data = [];
+    }
 
-const crud = new CRUD();
+    // Create operation
+    create(item) {
+        this.data.push(item);
+        return item;
+    }
 
-// Create
-console.log('Creating items...');
-crud.create({ id: 1, name: 'Item 1' });
-crud.create({ id: 2, name: 'Item 2' });
-console.log('Items after creation:', crud.read());
+    // Read operation
+    read() {
+        return this.data;
+    }
 
-// Read
-console.log('Reading items...');
-const items = crud.read();
-console.log('Current items:', items);
+    // Update operation
+    update(index, newItem) {
+        if (index >= 0 && index < this.data.length) {
+            this.data[index] = newItem;
+            return newItem;
+        }
+        throw new Error('Index out of bounds');
+    }
+    
+    // Delete Operation
 
-// Update
-console.log('Updating item at index 0...');
-crud.update(0, { id: 1, name: 'Updated Item 1' });
-console.log('Items after update:', crud.read());
+    delete(index) {
+        if (index >= 0 && index < this.data.length) {
+            return this.data.splice(index, 1);
+        }
+        throw new Error('Index out of bounds');
+    }
+}
 
-// Delete
-console.log('Deleting item at index 1...');
-crud.delete(1);
-console.log('Items after deletion:', crud.read());
+module.exports = CRUD;
